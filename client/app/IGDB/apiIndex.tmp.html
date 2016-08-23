@@ -1,0 +1,12 @@
+<h3 class="text-center gta-header">{{vm.header}}</h3>
+<form class="form  gta-center space">
+    <div class="form-group col-lg-6">
+        <input type="text" ng-model="apiGameName" class="form-control" />
+    </div>
+    <button type="submit" ng-click="vm.getIGDBGames(apiGameName)" class="btn btn-default">Search</button>
+</form>
+<br/>
+<br/>
+<div ng-repeat="gameApi in vm.mappedGames">
+    <div games-detail info="gameApi" callback-fn="vm.addToCollection(gameApi)"></div>
+</div>

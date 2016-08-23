@@ -1,0 +1,18 @@
+<div class="">
+    <h3 class="text-center gta-header">Here is list of publishers. Total: {{vm.publishers.length}}</h3>
+    <br />
+
+    <input type="button" value="Create new publisher" class="btn btn-success space" ui-sref="publisher.create" tooltip='Click here to create new publisher' />
+    <br />
+    <br />
+
+    <div ng-repeat="publisher in vm.publishers">
+        <div class="panel panel-default">
+            <div class="panel-heading" ui-sref="publishergames({id : publisher.id})" tooltip='Click to pull games by {{publisher.name}} publisher'>
+                <h4 class="header-inline" >{{publisher.name}}</h4>
+                <!--<a class="pull-right" ui-sref="publisher.delete({id : publisher.id})">Delete</a>-->
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+{
+  "name": "gametracker",
+  "description": "app to track a game",
+  "authors": [
+    "Anton Kuznetsov"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-sanitize": "^1.5.8",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3",
+    "moment": "^2.14.1",
+    "angular-ui-router": "^0.3.1",
+    "AngularJS-Toaster": "toaster#^2.0.0",
+    "angular-animate": "^1.5.7",
+    "angular-bootstrap": "~0.12.0",
+    "angular-resource": "^1.5.8",
+    "jquery": "^3.1.0",
+    "swagger-ui": "^2.1.4",
+    "angular-video-bg": "~0.3"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css"
+      ]
+    },
+    "font-awesome": {
+      "main": []
+    },
+    "AngularJS-Toaster": {
+      "main": [
+        "toaster.js",
+        "toaster.css"
+      ]
+    }
+  },
+  "resolutions": {
+    "angular": "^1.5.8"
+  }
+}

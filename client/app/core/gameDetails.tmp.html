@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+    <div class="panel-heading" ng-show="game.isOwn == undefined">
+        <h3 class="panel-title header-inline">{{game.name}}</h3>
+    </div>
+    <div class="panel-heading" ng-show="game.isOwn != undefined">
+        <h3 class="panel-title header-inline">{{game.name}}</h3>
+        <a class="pull-right" ng-click="addToCollection(game)" ng-if="!game.isOwn">Add to collection</a>
+        <p class="pull-right is-own" ng-if="game.isOwn">Game in collection</p>
+    </div>
+    <div class="panel-body row">
+        <div class="col-lg-4">
+            <img ng-src="https://res.cloudinary.com/igdb/image/upload/t_cover_small_2x/{{game.image}}" alt="image" ng-if="!!game.image" />
+        </div>
+        <div class="col-lg-8">
+            <p><strong>Release date:</strong> {{game.releaseDate | date: 'MMMM dd `yy'}}</p>
+            <p><strong>Platforms:</strong>
+                <span ng-repeat="platform in game.platforms" class="label platform">
+                <a ui-sref="platformgames({ id: platform.id })">{{platform.name}}</a>
+                </span>
+            </p>
+
+            <p><strong>Publishers:</strong>
+                <span ng-repeat="publisher in game.publishers" class="label publisher">
+                <a ui-sref="publishergames({ id: publisher.id })">{{publisher.name}}</a>
+                </span>
+            </p>
+
+            <p ng-if="game.rating != 0"><strong>Rating:</strong> {{game.rating}}</p>
+            <p ng-if="game.rating == 0"><strong>Rating:</strong> There is no reting for this game.</p>
+
+            <p><strong>Themes:</strong>
+                <span ng-repeat="theme in game.themes" class="label theme">
+                <a ui-sref="themegames({ id: theme.id })">{{theme.name}}</a>
+                </span>
+            </p>
+
+            <p><strong>Genres:</strong>
+                <span ng-repeat="genre in game.genres" class="label genre">
+                <a ui-sref="genregames({ id: genre.id })">{{genre.name}}</a>
+                </span>
+            </p>
+
+            <p><strong>Summary:</strong> {{game.summary}}</p>
+        </div>
+    </div>
+</div>

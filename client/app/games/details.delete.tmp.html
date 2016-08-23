@@ -1,0 +1,22 @@
+<div>
+    <br /><br />
+
+    <div>
+        <h3 class="text-center gta-header" ng-hide="vm.loading">{{vm.header}} {{vm.game.name}}</h3>
+    </div>
+    <br />
+
+    <div games-detail info="vm.game" class="space"></div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-default" ui-sref="games.list">Back</a>
+        </div>
+        <div class="col-lg-6" ng-show="vm.action === 'delete'">
+            <a class="btn btn-danger pull-right" ng-click="vm.deleteGame(vm.game)">Delete</a>
+        </div>
+        <div class="col-lg-6" ng-show="vm.action === 'details'">
+            <a class="btn btn-warning pull-right" ui-sref="games.edit({ id: vm.game.id })">Edit</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="">
+    <h3 class="text-center gta-header" ng-hide="vm.loading"> {{vm.header}} <span class="type">{{vm.typeObject.name}}</span>. <div>Total: {{vm.games.length}}</div></h3>
+    <br />
+    <br />
+    <br />
+    <div ng-show="vm.games.length == 0" class="col-sm-offset-3 col-sm-6 space">
+        <a class="btn btn-danger btn-block" ng-click="vm.deletePublisher(vm.typeObject)" ng-show="vm.type == 'publisher'">Delete publisher</a>
+        <a class="btn btn-danger btn-block" ng-click="vm.deletePlatform(vm.typeObject)" ng-show="vm.type == 'platform'">Delete platform</a>
+        <a class="btn btn-danger btn-block" ng-click="vm.deleteGenre(vm.typeObject)" ng-show="vm.type == 'genre'">Delete genre</a>
+        <a class="btn btn-danger btn-block" ng-click="vm.deleteTheme(vm.typeObject)" ng-show="vm.type == 'theme'">Delete theme</a>
+    </div>
+    <br/>
+    <div class="space">
+        <div ng-repeat="game in vm.games">
+            <div games-detail info="game"></div>
+        </div>
+    </div>
+</div>

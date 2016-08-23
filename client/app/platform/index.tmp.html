@@ -1,0 +1,19 @@
+<div class="">
+    <h3 class="text-center gta-header">Here is list of platforms. Total: {{vm.platforms.length}}</h3>
+    <br />
+
+
+    <input type="button" value="Create new platform" class="btn btn-success space" ui-sref="platform.create" tooltip='Click here to create new platform' />
+    <br />
+    <br />
+
+    <div ng-repeat="platform in vm.platforms">
+        <div class="panel panel-default">
+            <div class="panel-heading" ui-sref="platformgames({id : platform.id})" tooltip='Click to pull games by {{platform.name}} platform'>
+                <h4 class="header-inline" >{{platform.name}}</h4>
+                <!--<a class="pull-right" ui-sref="platform.delete({id : platform.id})">Delete</a>-->
+            </div>
+        </div>
+    </div>
+
+</div>

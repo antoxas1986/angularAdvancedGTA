@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+
+  <!-- build:css styles/lib.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/app.css -->
+  <!-- inject:css-->
+  <link rel="stylesheet" href="/client/css/app.css">
+  <!-- endinject -->
+  <!-- endbuild -->
+  <!-- build:js js/lib.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-video-bg/angular-video-bg.min.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js js/app.js -->
+  <!-- inject:js -->
+  <script src="/client/lib/jquery.arctext.js"></script>
+  <script src="/client/app/theme/theme.module.js"></script>
+  <script src="/client/app/theme/themeService.js"></script>
+  <script src="/client/app/theme/themeFactory.js"></script>
+  <script src="/client/app/theme/ThemeController.js"></script>
+  <script src="/client/app/theme/theme.route.js"></script>
+  <script src="/client/app/publisher/publisher.module.js"></script>
+  <script src="/client/app/publisher/publisherService.js"></script>
+  <script src="/client/app/publisher/publisherFactory.js"></script>
+  <script src="/client/app/publisher/PublisherController.js"></script>
+  <script src="/client/app/publisher/publisher.route.js"></script>
+  <script src="/client/app/platform/platform.module.js"></script>
+  <script src="/client/app/platform/platfromService.js"></script>
+  <script src="/client/app/platform/platfromFactory.js"></script>
+  <script src="/client/app/platform/PlatformController.js"></script>
+  <script src="/client/app/platform/plarform.route.js"></script>
+  <script src="/client/app/games/games.module.js"></script>
+  <script src="/client/app/layout/NavController.js"></script>
+  <script src="/client/app/app.module.js"></script>
+  <script src="/client/app/layout/homeRoute.js"></script>
+  <script src="/client/app/layout/HomeController.js"></script>
+  <script src="/client/app/IGDB/igdbFactory.js"></script>
+  <script src="/client/app/IGDB/igdbController.js"></script>
+  <script src="/client/app/core/core.module.js"></script>
+  <script src="/client/app/helpers/helperService.js"></script>
+  <script src="/client/app/helpers/HelperController.js"></script>
+  <script src="/client/app/helpers/helper.route.js"></script>
+  <script src="/client/app/genre/genre.module.js"></script>
+  <script src="/client/app/genre/genreService.js"></script>
+  <script src="/client/app/genre/genreFactory.js"></script>
+  <script src="/client/app/genre/GenreController.js"></script>
+  <script src="/client/app/genre/genre.route.js"></script>
+  <script src="/client/app/games/gamesService.js"></script>
+  <script src="/client/app/games/gamesRoutes.js"></script>
+  <script src="/client/app/games/gamesFactory.js"></script>
+  <script src="/client/app/games/GamesController.js"></script>
+  <script src="/client/app/core/gamesFilters.js"></script>
+  <script src="/client/app/core/gamesDetailsDirective.js"></script>
+  <!-- endinject -->
+  <!-- inject:templates:js -->
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+
+<body ng-cloak>
+  <div ng-controller="NavCtrl as vm">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+          <a class="navbar-brand" ui-sref="home">{{vm.appName}}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a ui-sref="games.list">Games</a></li>
+            <li><a ui-sref="publisher.list">Publishers</a></li>
+            <li><a ui-sref="platform.list">Platforms</a></li>
+            <li><a ui-sref="genre.list">Genres</a></li>
+            <li><a ui-sref="theme.list">Themes</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a ui-sref="games.apiList">Find game</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+
+    <div class="container">
+      <ui-view class="container"></ui-view>
+    </div>
+
+    <toaster-container toaster-options="{'time-out': 3500, 'position-class': 'toast-bottom-left'}"></toaster-container>
+
+  </div>
+
+</body>
+
+</html>

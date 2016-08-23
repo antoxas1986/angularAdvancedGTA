@@ -1,0 +1,27 @@
+plugins:
+  - jasmine 
+
+env:
+  browser: true
+
+globals:
+  moment: true
+  jquery: true
+  bard: true
+
+extends: ['eslint:recommended', 'angular']
+
+rules:
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  angular/controller-as-route: 1
+  angular/controller-as-vm: 1
+  angular/controller-as: 1
+  angular/empty-controller: 1
+  angular/controller-name: [2, "/[A-Z].*Ctrl/"]  
+
+

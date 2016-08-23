@@ -1,0 +1,259 @@
+@font-face {
+    font-family: DINLight;
+    src: url('../fonts/DINLight.ttf');
+}
+
+h1,
+h3,
+h4 {
+    color: white;
+}
+
+h3.panel-title {
+    color: white;
+}
+
+.header-inline {
+    display: inline;
+}
+
+body {
+    background-image: url("/client/img/halo4.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+    font-family: 'Georgia';
+}
+
+label {
+    color: white;
+}
+
+.panel-default .panel-heading {
+    background-color: #171612;
+}
+
+.btn-default,
+.btn-warning,
+.btn-danger,
+.btn-success {
+    background-color: #171612;
+    color: white;
+}
+
+.panel a,
+.panel a:hover {
+    font-weight: bold;
+    color: #337ab7;
+}
+
+.panel {
+    opacity: 0.95;
+}
+
+.is-own {
+    color: white;
+}
+
+.label {
+    margin-right: 6px;
+    border-radius: 15px;
+}
+
+.label a {
+    color: #464646;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.label a:hover {
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.platform {
+    background-color: #5dd2f5;
+}
+
+.publisher {
+    background-color: darkgrey;
+}
+
+.theme {
+    background-color: cadetblue;
+}
+
+.genre {
+    background-color: cyan;
+}
+
+.gta-header {
+    transition: top linear 0.5s;
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    margin-left: -350px;
+    width: 700px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #222222;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    border-radius: 0px 0px 4px 4px;
+    z-index: 9;
+}
+
+.ng-hide {
+    top: -10px;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    border-radius: 0;
+}
+
+.space {
+    margin-top: 90px;
+}
+
+.type {
+    font-style: italic;
+    font-weight: 600;
+    color: antiquewhite;
+}
+
+.gta-center {
+    margin-left: 30%;
+}
+
+.gta-video {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    padding: 477px;
+    width: 100%;
+    z-index: 15;
+}
+
+.gta-intro {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    left: 50%;
+    top: 80px;
+    margin-left: -350px;
+    color: whitesmoke;
+    z-index: 20;
+}
+
+.gta-line {
+    border: 2px solid white;
+    border-radius: 2px;
+    width: 600px;
+    margin-left: 50px;
+}
+
+.gta-intro-header {
+    text-align: center;
+    font-size: 48px;
+    text-shadow: 0 0 15px black;
+}
+
+.gta-logo {
+    font-size: 40px;
+    position: absolute;
+    margin-top: 78px;
+}
+
+.gta-logo-year {
+    display: inline;
+    font-size: 140px;
+    margin-left: 70px;
+    margin-right: 40px;
+    font-family: DINLight, sans-serif;
+    text-shadow: 0 0 15px black;
+}
+
+.gta-intro p {
+    text-align: center;
+    line-height: 1.4;
+    text-shadow: 1px 1px 1px #000;
+    width: 450px;
+    font-size: 15px;
+    margin-top: 20px;
+    margin-left: 17%;
+}
+
+.gta-logo-container {
+    text-align: center;
+    margin-top: 80px;
+    margin-left: -15px;
+}
+
+.gta-intro-button {
+    margin-top: 50px;
+    margin-left: 36%;
+}
+
+.gta-intro-button a {
+    text-align: center;
+    border: 2px solid whitesmoke;
+    border-radius: 3px;
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 15px;
+    box-shadow: 0 0 1em white;
+}
+
+.gta-intro-button a:hover {
+    box-shadow: 0 0 0.5em white;
+}
+
+.gta-intro-button a:active {
+    box-shadow: 0 0 0em white;
+}
+
+.starRating:not(old) {
+    display: inline-block;
+    width: 15.5em;
+    height: 1.5em;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.starRating:not(old)> input {
+    margin-right: -100%;
+    opacity: 0;
+}
+
+.starRating:not(old)> label {
+    display: block;
+    float: right;
+    position: relative;
+    background: url('star-off.svg');
+    background-size: contain;
+}
+
+.starRating:not(old)> label:before {
+    content: '';
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    background: url('star-on.svg');
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+}
+
+.starRating:not(old)> label:hover:before,
+.starRating:not(old)> label:hover~ label:before,
+.starRating:not(:hover)>:checked~ label:before {
+    opacity: 1;
+}

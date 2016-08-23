@@ -1,0 +1,61 @@
+<div class="">
+    <h3 class="text-center gta-header" ng-hide="vm.loading">Here is list of games that we have. Total: {{vm.gamesAmount}}</h3>
+    <br />
+    <!--<alert type="success" ng-show="vm.showHelpAlert" close="vm.closeAlert()">
+        Some alert here...
+    </alert>-->
+
+    <div class="row space">
+        <div class="col-sm-2">
+            <input type="button" value="Create new game" class="btn btn-success" ui-sref="games.create" tooltip='Click here to create new game' />
+        </div>
+        <div class="col-sm-offset-3 col-sm-3">
+            <p>
+                <span class="starRating">                      
+                <input id="rating10" type="radio" name="rating" value="10" ng-model="rating">
+                <label for="rating10">10</label>
+                <input id="rating9" type="radio" name="rating" value="9" ng-model="rating">
+                <label for="rating9">9</label>
+                <input id="rating8" type="radio" name="rating" value="8" ng-model="rating">
+                <label for="rating8">8</label>
+                <input id="rating7" type="radio" name="rating" value="7" ng-model="rating">
+                <label for="rating7">7</label>
+                <input id="rating6" type="radio" name="rating" value="6" ng-model="rating">
+                <label for="rating6">6</label>
+                <input id="rating5" type="radio" name="rating" value="5" ng-model="rating">
+                <label for="rating5">5</label>
+                <input id="rating4" type="radio" name="rating" value="4" ng-model="rating">
+                <label for="rating4">4</label>
+                <input id="rating3" type="radio" name="rating" value="3" ng-model="rating">
+                <label for="rating3">3</label>
+                <input id="rating2" type="radio" name="rating" value="2" ng-model="rating">
+                <label for="rating2">2</label>
+                <input id="rating1" type="radio" name="rating" value="1" ng-model="rating">
+                <label for="rating1">1</label>
+                </span>
+            </p>
+        </div>
+        <div>
+            <div class="row">
+            <button type="button" ng-click="rating=undefined" class="btn btn-xs btn-default">all</button>
+            <button type="button" ng-click="rating=0" class="btn btn-xs btn-default">not rated</button>
+            </div>
+        </div>
+        
+    </div>
+    <br/>
+    <br/>
+
+    <div ng-repeat="game in vm.games | orderBy: '-rating'| myrating:rating">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="header-inline" ui-sref="games.details({id : game.id})">{{game.name}}</h4> &nbsp;
+                <span class="badge">{{game.rating}}</span>
+                <a class="pull-right" ui-sref="games.delete({id : game.id})">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

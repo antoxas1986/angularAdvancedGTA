@@ -1,0 +1,28 @@
+<div>
+    <h3 class="text-center gta-header" ng-hide="vm.loading">{{vm.header}}</h3>
+    <br/><br/>
+    <form class="form-horizontal space">
+        <div class="form-group">
+            <label for="name" class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="name" placeholder="Name" ng-model="vm.genre.name">
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.action === 'create'">
+            <div class="col-sm-offset-3 col-sm-2">
+                <input type="button" value="Back" class="btn btn-default" ui-sref="games.list" />
+            </div>
+            <div class="col-sm-offset-3 col-sm-2">
+                <button type "input" class="btn btn-success" ng-click="vm.createGenre(vm.genre)">Create</button>
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.action === 'edit'">
+            <div class="col-sm-offset-3 col-sm-2">
+                <input type="button" value="Back" class="btn btn-default" ui-sref="games.list" />
+            </div>
+            <div class="col-sm-offset-3 col-sm-2">
+                <button type "input" class="btn btn-success" ng-click="vm.updateGenre(vm.genre)">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

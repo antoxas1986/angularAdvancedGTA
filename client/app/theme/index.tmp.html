@@ -1,0 +1,18 @@
+<div class="">
+    <h3 class="text-center gta-header">Here is list of themes. Total: {{vm.themes.length}}</h3>
+    <br />
+
+    <input type="button" value="Create new theme" class="btn btn-success space" ui-sref="theme.create" tooltip='Click here to create new theme' />
+    <br />
+    <br />
+
+    <div ng-repeat="theme in vm.themes">
+        <div class="panel panel-default">
+            <div class="panel-heading" ui-sref="themegames({id : theme.id})" tooltip='Click to pull games by {{theme.name}} theme'>
+                <h4 class="header-inline" >{{theme.name}}</h4>
+                <!--<a class="pull-right" ui-sref="theme.delete({id : theme.id})">Delete</a>-->
+            </div>
+        </div>
+    </div>
+
+</div>
