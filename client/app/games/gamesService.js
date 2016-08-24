@@ -56,16 +56,16 @@
                 gameCache.remove('gameList');
             }
             if (platformCache) {
-                gameCache.remove('platformList');
+                platformCache.remove('platformList');
             }
             if (publisherCache) {
-                gameCache.remove('publisherList');
+                publisherCache.remove('publisherList');
             }
             if (genreCache) {
-                gameCache.remove('genreList');
+                genreCache.remove('genreList');
             }
             if (themeCache) {
-                gameCache.remove('themeList');
+                themeCache.remove('themeList');
             }
         }
 

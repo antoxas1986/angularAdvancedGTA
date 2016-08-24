@@ -7,6 +7,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./server/database/gta.db');
 var async = require('async');
 var winston = require('winston');
+var uuid = require('node-uuid');
 
 router.route('/')
     .get(function (req, res) {
@@ -53,12 +54,7 @@ router.route('/')
 
             async.forEach(game.platforms, function (platform, next) {
                 db.all('select * from platforms where name = ?', [platform.name], function (err, data) {
-                    try {
-                        insertPlatform(platform, next, data);
-                    }catch(error){
-                        winston.log('error', error);
-                    }
-                    
+                    insertPlatform(platform, next, data);
                 });
             });
 
@@ -82,13 +78,11 @@ router.route('/')
                     });
 
                 } else {
-                    db.all('select max(id) as id from themes', function (err, data) {
-                        theme.id = data[0]['id'] + 1;
-                        db.run('insert into themes(id, name) values(?,?)', [theme.id, theme.name]);
-                        db.run('insert into game_theme(gameId, themeId) values(?,?)', [game.id, theme.id], function () {
-                            winston.log('info', 'create theme, insert to join table');
-                            callback();
-                        });
+                    theme.id = uuid.v1();
+                    db.run('insert into themes(id, name) values(?,?)', [theme.id, theme.name]);
+                    db.run('insert into game_theme(gameId, themeId) values(?,?)', [game.id, theme.id], function () {
+                        winston.log('info', 'create theme, insert to join table');
+                        callback();
                     });
                 }
             }
@@ -101,13 +95,11 @@ router.route('/')
                     });
 
                 } else {
-                    db.all('select max(id) as id from publishers', function (err, data) {
-                        publisher.id = data[0]['id'] + 1;
-                        db.run('insert into publishers(id, name) values(?,?)', [publisher.id, publisher.name]);
-                        db.run('insert into game_publisher(gameId, publisherId) values(?,?)', [game.id, publisher.id], function () {
-                            winston.log('info', 'create publisher, insert to join table');
-                            callback();
-                        });
+                    publisher.id = uuid.v1();
+                    db.run('insert into publishers(id, name) values(?,?)', [publisher.id, publisher.name]);
+                    db.run('insert into game_publisher(gameId, publisherId) values(?,?)', [game.id, publisher.id], function () {
+                        winston.log('info', 'create publisher, insert to join table');
+                        callback();
                     });
                 }
             }
@@ -120,13 +112,11 @@ router.route('/')
                     });
 
                 } else {
-                    db.all('select max(id) as id from platforms', function (err, data) {
-                        platform.id = data[0]['id'] + 1;
-                        db.run('insert into platforms(id, name) values(?,?)', [platform.id, platform.name]);
-                        db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, platform.id], function () {
-                            winston.log('info', 'create platfrom, insert to join table');
-                            callback();
-                        });
+                    platform.id = uuid.v1();
+                    db.run('insert into platforms(id, name) values(?,?)', [platform.id, platform.name]);
+                    db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, platform.id], function () {
+                        winston.log('info', 'create platfrom, insert to join table');
+                        callback();
                     });
                 }
             }
@@ -138,13 +128,11 @@ router.route('/')
                         callback();
                     });
                 } else {
-                    db.all('select max(id) as id from genres', function (err, data) {
-                        genre.id = data[0]['id'] + 1;
-                        db.run('insert into genres(id, name) values(?,?)', [genre.id, genre.name]);
-                        db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, genre.id], function () {
-                            winston.log('info', 'create genre, insert to join table');
-                            callback();
-                        });
+                    genre.id = uuid.v1();
+                    db.run('insert into genres(id, name) values(?,?)', [genre.id, genre.name]);
+                    db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, genre.id], function () {
+                        winston.log('info', 'create genre, insert to join table');
+                        callback();
                     });
                 }
             }
