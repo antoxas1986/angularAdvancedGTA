@@ -46,9 +46,26 @@
         }
 
         function deleteGameListCache() {
-            var dataCache = $cacheFactory.get('gamesCache');
-            if (dataCache) {
-                dataCache.remove('gameList');
+            var gameCache = $cacheFactory.get('gamesCache');
+            var platformCache = $cacheFactory.get('platformCache');
+            var publisherCache = $cacheFactory.get('publisherCache');
+            var genreCache = $cacheFactory.get('genreCache');
+            var themeCache = $cacheFactory.get('themeCache');
+
+            if (gameCache) {
+                gameCache.remove('gameList');
+            }
+            if (platformCache) {
+                gameCache.remove('platformList');
+            }
+            if (publisherCache) {
+                gameCache.remove('publisherList');
+            }
+            if (genreCache) {
+                gameCache.remove('genreList');
+            }
+            if (themeCache) {
+                gameCache.remove('themeList');
             }
         }
 

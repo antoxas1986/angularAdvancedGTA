@@ -6,6 +6,7 @@ var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./server/database/gta.db');
 var async = require('async');
+var winston = require('winston');
 
 router.route('/')
     .get(function (req, res) {
@@ -13,6 +14,7 @@ router.route('/')
             res.send(data);
         });
     });
+
 router.route('/:id')
     .get(function (req, res) {
         db.all('select * from games where id = ' + req.params.id, function (err, data) {
@@ -21,91 +23,133 @@ router.route('/:id')
                 game.genres = data;
                 db.all('select id, name from platforms join game_platform on id = platformId where gameId = ?', [game.id], function (err, data) {
                     game.platforms = data;
-                    res.send(game);
+                    db.all('select id, name from themes join game_theme on id = themeId where gameId = ?', [game.id], function (err, data) {
+                        game.themes = data;
+                        db.all('select id, name from publishers join game_publisher on id = publisherId where gameId = ?', [game.id], function (err, data) {
+                            game.publishers = data;
+                            winston.log('info', 'game ready');
+                            res.send(game);
+                        });
+                    });
                 });
             });
         });
     });
+
 router.route('/')
     .post(function (req, res) {
         var game = req.body;
-        console.log(game);
+        winston.log('info', 'insering game', { inserting: game });
         db.all('select max(id) as id from games', function (err, data) {
             game.id = data[0]['id'] + 1;
             db.run('insert into games(id, name, rating, releaseDate, summary, igdbId, image) values(?,?,?,?,?,?,?)',
                 [game.id, game.name, game.rating, game.releaseDate, game.summary, game.igdb, game.image]);
 
             async.forEach(game.genres, function (genre, next) {
-                insert(genre, next);
-            });
-            async.forEach(game.platforms, function (platform, next) {
-                inserPlatform(platform, next);
-            });
-
-            function inserPlatform(platform, callback) {
-                db.all('select * from platforms where name = ?', [platform.name], function (err, data) {
-                    if (data.length > 0) {
-                        db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, data[0].id]);
-                        callback();
-                    } else {
-                        db.all('select max(id) as id from platforms', function (err, data) {
-                            platform.id = data[0]['id'] + 1;
-                            db.run('insert into platforms(id, name) values(?,?)', [platform.id, platform.name]);
-                            db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, platform.id]);
-                            callback();
-                        });
-                    }
-                });
-            }
-
-            function insert(genre, callback) {
-                console.log('1');
                 db.all('select * from genres where name = ?', [genre.name], function (err, data) {
-                    console.log('2');
-                    if (data.length > 0) {
-                        db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, data[0].id]);
-                        callback();
-                        console.log('3');
-                    } else {
-                        db.all('select max(id) as id from genres', function (err, data) {
-                            genre.id = data[0]['id'] + 1;
-                            db.run('insert into genres(id, name) values(?,?)', [genre.id, genre.name]);
-                            db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, genre.id]);
-                            callback();
-                            console.log('3');
-                        });
-                    }
+                    insertGenre(genre, next, data);
                 });
+            });
+
+            async.forEach(game.platforms, function (platform, next) {
+                db.all('select * from platforms where name = ?', [platform.name], function (err, data) {
+                    try {
+                        insertPlatform(platform, next, data);
+                    }catch(error){
+                        winston.log('error', error);
+                    }
+                    
+                });
+            });
+
+            async.forEach(game.publishers, function (publisher, next) {
+                db.all('select * from publishers where name = ?', [publisher.name], function (err, data) {
+                    insertPublisher(publisher, next, data);
+                });
+            });
+
+            async.forEach(game.themes, function (theme, next) {
+                db.all('select * from themes where name = ?', [theme.name], function (err, data) {
+                    insertTheme(theme, next, data);
+                });
+            });
+
+            function insertTheme(theme, callback, data) {
+                if (data.length > 0) {
+                    db.run('insert into game_theme(gameId, themeId) values(?,?)', [game.id, data[0].id], function () {
+                        winston.log('info', 'exist theme, insert to join table');
+                        callback();
+                    });
+
+                } else {
+                    db.all('select max(id) as id from themes', function (err, data) {
+                        theme.id = data[0]['id'] + 1;
+                        db.run('insert into themes(id, name) values(?,?)', [theme.id, theme.name]);
+                        db.run('insert into game_theme(gameId, themeId) values(?,?)', [game.id, theme.id], function () {
+                            winston.log('info', 'create theme, insert to join table');
+                            callback();
+                        });
+                    });
+                }
             }
 
-            // game.genres.forEach(function (genre) {
-            //     console.log(genre);
-            //     console.log('1');
-            //     db.serialize(function () {
-            //         db.all('select * from genres where name = ?', [genre.name], function (err, data) {
-            //             console.log(data);
-            //             console.log('2');
-            //             if (data || data.length > 0) {
-            //                 db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, data[0].id]);
-            //                 console.log('join');
-            //                 console.log('3');
-            //             } else {
-            //                 db.all('select max(id) as id from genres', function (err, data) {
-            //                     genre.id = data[0]['id'] + 1;
-            //                     db.run('insert into genres(id, name) values(?,?)', [genre.id, genre.name]);
-            //                     db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, genre.id]);
-            //                     console.log('new');
-            //                     console.log('3');
-            //                 });
-            //             }
-            //         });
-            //     });
+            function insertPublisher(publisher, callback, data) {
+                if (data.length > 0) {
+                    db.run('insert into game_publisher(gameId, publisherId) values(?,?)', [game.id, data[0].id], function () {
+                        winston.log('info', 'exist publisher, insert to join table');
+                        callback();
+                    });
 
-            //     db.close();
-            // });
+                } else {
+                    db.all('select max(id) as id from publishers', function (err, data) {
+                        publisher.id = data[0]['id'] + 1;
+                        db.run('insert into publishers(id, name) values(?,?)', [publisher.id, publisher.name]);
+                        db.run('insert into game_publisher(gameId, publisherId) values(?,?)', [game.id, publisher.id], function () {
+                            winston.log('info', 'create publisher, insert to join table');
+                            callback();
+                        });
+                    });
+                }
+            }
 
+            function insertPlatform(platform, callback, data) {
+                if (data.length > 0) {
+                    db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, data[0].id], function () {
+                        winston.log('info', 'exist platfrom, insert to join table');
+                        callback();
+                    });
 
+                } else {
+                    db.all('select max(id) as id from platforms', function (err, data) {
+                        platform.id = data[0]['id'] + 1;
+                        db.run('insert into platforms(id, name) values(?,?)', [platform.id, platform.name]);
+                        db.run('insert into game_platform(gameId, platformId) values(?,?)', [game.id, platform.id], function () {
+                            winston.log('info', 'create platfrom, insert to join table');
+                            callback();
+                        });
+                    });
+                }
+            }
+
+            function insertGenre(genre, callback, data) {
+                if (data.length > 0) {
+                    db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, data[0].id], function () {
+                        winston.log('info', 'exist genre, insert to join table');
+                        callback();
+                    });
+                } else {
+                    db.all('select max(id) as id from genres', function (err, data) {
+                        genre.id = data[0]['id'] + 1;
+                        db.run('insert into genres(id, name) values(?,?)', [genre.id, genre.name]);
+                        db.run('insert into game_genre(gameId, genreId) values(?,?)', [game.id, genre.id], function () {
+                            winston.log('info', 'create genre, insert to join table');
+                            callback();
+                        });
+                    });
+                }
+            }
         });
+        winston.log('info', 'game inserted');
         res.send('game insert');
     });
 
@@ -114,15 +158,22 @@ router.route('/:id')
         db.run('delete from games where id = ' + req.params.id, function (err, data) {
             db.run('delete from game_genre where gameId = ?', [req.params.id]);
             db.run('delete from game_platform where gameId = ?', [req.params.id]);
+            db.run('delete from game_publisher where gameId = ?', [req.params.id]);
+            db.run('delete from game_theme where gameId = ?', [req.params.id]);
+            winston.log('info', 'game deleted');
             res.send('game deleted');
         });
     });
+
 router.route('/')
     .put(function (req, res) {
         var game = req.body;
-        db.run('update games set id = ?, name = ? where id = ?', [game.id, game.name, game.id], function (err, data) {
-            res.send('game updated');
-        });
+        db.run('update games set id = ?, name = ?, rating = ?, releaseDate=?, igdbId =?, summary =?, image =? where id = ?',
+            [game.id, game.name, game.rating, game.releaseDate, game.igdbId, game.summary, game.image, game.id],
+            function (err, data) {
+                winston.log('info', 'game updated');
+                res.send('game updated');
+            });
     });
 
 module.exports = router;

@@ -211,6 +211,7 @@ function serve(isDev) {
         })
         .on('crash', function () {
             log('*** nodemon crashed: script crashed for some reason ***');
+            $.nodemon(nodeOptions);
         })
         .on('exit', function () {
             log('*** nodemon exited cleanly ***');
