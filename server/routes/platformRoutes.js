@@ -22,7 +22,7 @@ router.route('/')
     .post(function (req, res) {
         var platform = req.body;
         db.all('select max(id) as id from platforms', function (err, data) {
-            platform.id = parseInt(data[0]['id'], 10) + 1;
+            platform.id = data[0]['id'] + 1;
             db.run('insert into platforms(id, name) values(?,?)', [platform.id, platform.name]);
         });
         res.send('platform insert');
@@ -35,5 +35,13 @@ router.route('/:id')
         });
 
     });
+router.route('/')
+    .put(function (req, res) {
+        var platform = req.body;
+        db.run('update platforms set id = ?, name = ? where id = ?', [platform.id, platform.name, platform.id], function (err, data) {
+            res.send('platform updated');
+        });
+    });
+
 
 module.exports = router;

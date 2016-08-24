@@ -23,7 +23,7 @@
         }
 
         function activate() {
-            var header = angular.element('#header');
+            var header = $('#header');
             header.arctext({ radius: 500 });
         }
 

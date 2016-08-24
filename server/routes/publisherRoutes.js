@@ -20,20 +20,28 @@ router.route('/:id')
     });
 router.route('/')
     .post(function (req, res) {
-        var platform = req.body;
+        var publisher = req.body;
         db.all('select max(id) as id from publishers', function (err, data) {
-            platform.id = parseInt(data[0]['id'], 10) + 1;
-            db.run('insert into publishers(id, name) values(?,?)', [platform.id, platform.name]);
+            publisher.id = data[0]['id'] + 1;
+            db.run('insert into publishers(id, name) values(?,?)', [publisher.id, publisher.name]);
         });
-        res.send('platform insert');
+        res.send('publisher insert');
     });
 
 router.route('/:id')
     .delete(function (req, res) {
         db.run('delete from publishers where id = ' + req.params.id, function (err, data) {
-            res.send('platform deleted');
+            res.send('publisher deleted');
         });
-
     });
+
+router.route('/')
+    .put(function (req, res) {
+        var publisher = req.body;
+        db.run('update publishers set id = ?, name = ? where id = ?', [publisher.id, publisher.name, publisher.id], function (err, data) {
+            res.send('publisher updated');
+        });
+    });
+
 
 module.exports = router;

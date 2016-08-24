@@ -179,7 +179,7 @@ gulp.task('report', ['test'], function () {
     browserSync(options);
 });
 
-gulp.task('serve', ['eslint'], function () {
+gulp.task('serve', function () {
     serve(true);
 });
 
@@ -197,7 +197,7 @@ function serve(isDev) {
         watch: ['server/app.js', 'server/**/*.js']
     };
     return $.nodemon(nodeOptions)
-        .on('restart', ['eslint'], function (ev) {
+        .on('restart', function (ev) {
             log('*** nodemon restarted ***');
             log('files changed on restart:\n' + ev);
             // setTimeout(function () {

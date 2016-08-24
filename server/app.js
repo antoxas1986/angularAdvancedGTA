@@ -8,6 +8,7 @@ var platformRouter = require('./routes/platformRoutes.js');
 var publisherRouter = require('./routes/publisherRoutes.js');
 var genreRouter = require('./routes/genreRoutes.js');
 var themeRouter = require('./routes/themeRoutes.js');
+var gamesRouter = require('./routes/gamesRoutes.js');
 var bodyParser = require('body-parser');
 
 
@@ -30,16 +31,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-
 app.use('/api/platforms', platformRouter);
 app.use('/api/publishers', publisherRouter);
 app.use('/api/genres', genreRouter);
 app.use('/api/themes', themeRouter);
+app.use('/api/games', gamesRouter);
 
 app.get('/', function (req, res) {
     res.render('index');
 });
 
-app.listen(port, function (err) {
+app.listen(port, function () {
     console.log('Server running on port: ' + port);
 });

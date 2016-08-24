@@ -20,20 +20,28 @@ router.route('/:id')
     });
 router.route('/')
     .post(function (req, res) {
-        var platform = req.body;
+        var theme = req.body;
         db.all('select max(id) as id from themes', function (err, data) {
-            platform.id = parseInt(data[0]['id'], 10) + 1;
-            db.run('insert into themes(id, name) values(?,?)', [platform.id, platform.name]);
+            theme.id = data[0]['id'] + 1;
+            db.run('insert into themes(id, name) values(?,?)', [theme.id, theme.name]);
         });
-        res.send('platform insert');
+        res.send('theme insert');
     });
 
 router.route('/:id')
     .delete(function (req, res) {
         db.run('delete from themes where id = ' + req.params.id, function (err, data) {
-            res.send('platform deleted');
+            res.send('theme deleted');
         });
-
     });
+
+router.route('/')
+    .put(function (req, res) {
+        var theme = req.body;
+        db.run('update themes set id = ?, name = ? where id = ?', [theme.id, theme.name, theme.id], function (err, data) {
+            res.send('theme updated');
+        });
+    });
+
 
 module.exports = router;

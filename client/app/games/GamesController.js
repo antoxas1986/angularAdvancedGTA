@@ -19,7 +19,6 @@
         vm.gamesApi = [];
         vm.showHelpAlert = true;
         vm.closeAlert = closeAlert;
-        vm.gamesAmount;
         vm.loading = true;
 
         vm.deleteGame = deleteGame;
